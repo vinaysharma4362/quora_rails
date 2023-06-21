@@ -1,0 +1,8 @@
+<h1>Topic Following: </h1>
+<% if @topic_follow.present? %>
+  <% @topic_follow.each do |f| %>
+    <div class="row p-4 border">
+      <%= f.title %>
+    </div>
+  <% end %>
+<% end %>

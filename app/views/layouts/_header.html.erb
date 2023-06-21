@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <%= link_to 'Home', root_url, class: 'navbar-brand' %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
+       
+          <li class="nav-item active">
+          <%= link_to 'Followers', followers_home_index_path, class: 'nav-link'%>
+        </li>
+          <li class="nav-item active">
+          <%= link_to 'Following', followee_home_index_path, class: 'nav-link'%>
+        </li>
+         <li class="nav-item active">
+          <%= link_to 'Topic Following', topic_follow_home_index_path, class: 'nav-link'%>
+        </li>
+
+         <li class="nav-item active">
+          <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'nav-link fw-600 ml-auto'%>
+        </li>
+
+      <% else %>
+        <li class="nav-item active">
+          <%= link_to 'Sign In', new_user_session_path, class: 'nav-link'%>
+        </li>
+        <li class="nav-item active">
+          <%= link_to 'Register', new_user_registration_path, class: 'nav-link'%>
+        </li>
+      <% end %>
+     
+      
+  </div>
+</nav>

@@ -1,0 +1,10 @@
+<h1>Questions: </h1>
+<% if @questions.present? %>
+  <% @questions.each do |q| %>
+    <div class="row">
+      <%= link_to question_path(q), class: '' do %>
+        <%= q.title.titleize %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
