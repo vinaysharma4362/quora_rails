@@ -1,0 +1,62 @@
+<p style="color: green"><%= notice %></p>
+<%= render @question %>
+<div>
+  <% if @question.user == current_user %>
+    <%= link_to "Edit this question", edit_question_path(@question) %> |
+    <%= button_to "Destroy this question", @question, method: :delete %>
+  <% end %>
+  <%= link_to "Back to questions", questions_path %>
+</div>
+<% if @question.topic_ids.present? %>
+  <% @question.topic_ids.each do |topic| %>
+    <% topic = Topic.find_by(id: topic)%>
+    <div class="row mb-4 border-bottom">
+      <div class="col-9">
+        <%= topic.title %>
+      </div>
+      <div class="col-3">
+        <% if current_user  && !current_user.topics.include?(topic) %>
+          <%= button_to follow_topic_path(id: topic.id, question_id: @question.id), method: :post, class: 'btn btn-primary' do %>
+            Follow Topic
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<%= form_for(@answer, url: answers_path, method: :post) do |f| %>
+  <div class="row my-4">
+    <div class="form-group col-9">
+      <%= f.text_area :content, class: 'form-control' %>
+      <%= f.hidden_field :question_id, value: @question.id %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+    </div>
+    <div class="form-group col-3">
+      <%= f.submit 'Post Answer', class: 'btn btn-primary'%>
+    </div>
+  </div>
+<% end %>
+<h1>Answers: </h1>
+<% if @answers.present? %>
+  <% @answers.each do |a| %>
+    <%if  a.id.present? %>
+      <div class="row mb-4">
+        <div class="col-9">
+          <%= a.content%>
+        </div>
+        <div class="col-3">
+          Posted By: <%= a.user.email %>
+          <% if current_user != a.user && !current_user.followee.include?(a.user) %>
+            <%= button_to follow_user_path(id: a.user.id.to_i, question_id: @question.id), method: :post, class: 'btn btn-primary' do %>
+              Follow User
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <div class="row">
+    No Answers
+  </div>
+<% end %>
