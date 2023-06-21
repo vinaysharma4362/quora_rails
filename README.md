@@ -6,6 +6,6 @@ Database : Postgresql
 
 User seeds.rb to create default records
 
-after createing a database perform migration and start serview by
+after createing a database perform migration and start server by
 
 bin/dev
